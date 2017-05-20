@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+           xmlns="http://www.imeta.org/meta"
+           targetNamespace="http://www.imeta.org/meta"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xs:element name="components" type="componentsType"/>
+    <xs:complexType name="componentsType">
+        <xs:sequence>
+            <xs:element type="referencesType" name="references" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="componentType" name="component" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="referencesType">
+        <xs:sequence>
+            <xs:element type="referenceType" name="reference" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="referenceType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute type="xs:string" name="file" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="componentType">
+        <xs:choice maxOccurs="unbounded" minOccurs="0">
+            <xs:element type="classType" name="class" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element type="interfaceType" name="interface" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element type="enumType" name="enum" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element type="datatypeType" name="datatype" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element type="realizationsType" name="realizations" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="generalizationsType" name="generalizations" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="associationsType" name="associations" minOccurs="0" maxOccurs="1"/>
+        </xs:choice>
+        <xs:attribute type="xs:string" name="name" use="required"/>
+        <xs:attribute type="xs:string" name="moduleName" use="required"/>
+        <xs:attribute type="xs:string" name="title" use="required"/>
+        <xs:attribute type="xs:string" name="stereotype" use="optional"/>
+        <xs:attribute type="xs:string" name="note" use="optional"/>
+        <xs:attribute type="xs:string" name="id" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="classType" mixed="true">
+        <xs:sequence>
+            <xs:element type="attributesType" name="attributes" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="name" use="required"/>
+        <xs:attribute type="xs:string" name="title" use="required"/>
+        <xs:attribute type="xs:string" name="tableName" use="optional"/>
+        <xs:attribute type="xs:boolean" name="isView" use="optional"/>
+        <xs:attribute type="xs:string" name="stereotype" use="optional"/>
+        <xs:attribute type="xs:string" name="note" use="optional"/>
+        <xs:attribute type="xs:string" name="id" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="interfaceType">
+        <xs:sequence>
+            <xs:element type="attributesType" name="attributes" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="name" use="required"/>
+        <xs:attribute type="xs:string" name="title" use="required"/>
+        <xs:attribute type="xs:string" name="stereotype" use="optional"/>
+        <xs:attribute type="xs:string" name="note" use="optional"/>
+        <xs:attribute type="xs:string" name="id" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="enumType">
+        <xs:sequence>
+            <xs:element type="itemType" name="item" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="name" use="required"/>
+        <xs:attribute type="xs:string" name="title" use="required"/>
+        <xs:attribute type="xs:string" name="stereotype" use="optional"/>
+        <xs:attribute type="xs:string" name="note" use="optional"/>
+        <xs:attribute type="xs:string" name="id" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="datatypeType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute type="xs:string" name="name" use="required"/>
+                <xs:attribute type="xs:string" name="title" use="required"/>
+                <xs:attribute type="xs:string" name="id" use="required"/>
+                <xs:attribute type="xs:string" name="stereotype" use="optional"/>
+                <xs:attribute type="xs:string" name="note" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="attributesType" mixed="true">
+        <xs:sequence>
+            <xs:element type="attributeType" name="attribute" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="attributeType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute type="xs:string" name="name" use="required"/>
+                <xs:attribute type="xs:string" name="columnName" use="optional"/>
+                <xs:attribute type="xs:string" name="title" use="required"/>
+                <xs:attribute type="xs:string" name="type" use="required"/>
+                <xs:attribute type="xs:short" name="iLength" use="optional" default="50"/>
+                <xs:attribute type="xs:byte" name="iPrecision" use="optional" default="12"/>
+                <xs:attribute type="xs:byte" name="iScale" use="optional" default="2"/>
+                <xs:attribute type="xs:string" name="defaultValue" use="optional"/>
+                <xs:attribute type="xs:string" name="minValue" use="optional"/>
+                <xs:attribute type="xs:string" name="maxValue" use="optional"/>
+                <xs:attribute type="xs:boolean" name="isRequired" use="optional"/>
+                <xs:attribute type="xs:boolean" name="isKey" use="optional"/>
+                <xs:attribute type="xs:boolean" name="isSyncKey" use="optional"/>
+                <xs:attribute type="xs:boolean" name="isGlobalization" use="optional"/>
+                <xs:attribute type="xs:boolean" name="isUnique" use="optional"/>
+                <xs:attribute type="xs:boolean" name="isCode" use="optional"/>
+                <xs:attribute type="xs:boolean" name="isName" use="optional"/>
+                <xs:attribute type="xs:string" name="validate" use="optional"/>
+                <xs:attribute type="xs:string" name="stereotype" use="optional"/>
+                <xs:attribute type="xs:string" name="note" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="itemType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute type="xs:string" name="name" use="required"/>
+                <xs:attribute type="xs:string" name="title" use="required"/>
+                <xs:attribute type="xs:byte" name="value" use="required"/>
+                <xs:attribute type="xs:string" name="stereotype" use="optional"/>
+                <xs:attribute type="xs:string" name="note" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="associationsType" mixed="true">
+        <xs:sequence>
+            <xs:element type="associationType" name="association" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="associationType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute type="xs:string" name="type" use="required" fixed="composition"/>
+                <xs:attribute type="xs:string" name="roleB" use="required"/>
+                <xs:attribute type="xs:string" name="typeB" use="required"/>
+                <xs:attribute type="xs:string" name="roleA" use="required"/>
+                <xs:attribute type="xs:string" name="typeA" use="required"/>
+                <xs:attribute type="multipleType" name="roleAMulti" use="optional" default="0..n"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="multipleType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="1"/>
+            <xs:enumeration value="1..n"/>
+            <xs:enumeration value="0..n"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="generalizationsType">
+        <xs:sequence>
+            <xs:element type="generalizationType" name="generalization" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="generalizationType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute type="xs:string" name="parent" use="required"/>
+                <xs:attribute type="xs:string" name="child" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="realizationsType" mixed="true">
+        <xs:sequence>
+            <xs:element type="realizationType" name="realization" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="realizationType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute type="xs:string" name="supplier" use="required"/>
+                <xs:attribute type="xs:string" name="client" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+</xs:schema>
